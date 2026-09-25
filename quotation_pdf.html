@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Letter - {{ quotation.quotation_number }}</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1.2cm 1.5cm 1.6cm 1.5cm;
+            @bottom-center {
+                content: "PT. MAROA TUNGGA ABADI | Jl. Sultan Dg. Raja No. 59, Ruko No. 63, Timungan Lompoa, Bontoala, Kota Makassar, Sulawesi Selatan – 90152\A Email: shafaralfarel@gmail.com | Phone: 0852 5600 6119 | Instagram: @maroatunggaabadi";
+                font-size: 7.2pt;
+                color: #0284c7;
+                font-family: Arial, Helvetica, sans-serif;
+                white-space: pre-wrap;
+                font-weight: 600;
+                line-height: 1.3;
+            }
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9.5pt;
+            color: #000000;
+            line-height: 1.35;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header */
+        .header-table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .logo-box {
+            vertical-align: middle;
+        }
+        .logo-title {
+            font-size: 24pt;
+            font-weight: 900;
+            color: #004b93;
+            letter-spacing: 1px;
+            line-height: 1;
+            font-family: Arial, sans-serif;
+        }
+        .logo-tagline {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #0056b3;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+        .doc-title-text {
+            font-size: 19pt;
+            font-weight: 900;
+            color: #0052cc;
+            text-align: right;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .blue-bar {
+            height: 4px;
+            background-color: #0052cc;
+            width: 100%;
+            margin-top: 6px;
+            margin-bottom: 14px;
+        }
+
+        /* Recipient & Meta Box */
+        .meta-container {
+            width: 100%;
+            border: 1px solid #000000;
+            margin-bottom: 14px;
+            border-collapse: collapse;
+        }
+        .meta-container td {
+            padding: 8px 12px;
+            vertical-align: top;
+            font-size: 9.5pt;
+        }
+        .meta-left {
+            width: 50%;
+            border-right: 1px solid #000000;
+        }
+        .meta-right {
+            width: 50%;
+        }
+
+        .intro-text {
+            font-size: 9.5pt;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .keterangan-text {
+            font-size: 9.5pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Items Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+        .items-table th {
+            background-color: #0052cc;
+            color: #ffffff;
+            font-size: 8.5pt;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 6px 4px;
+            border: 1px solid #000000;
+            text-align: center;
+        }
+        .items-table td {
+            border: 1px solid #000000;
+            padding: 6px 5px;
+            font-size: 9pt;
+            vertical-align: middle;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+
+        .item-img {
+            max-width: 120px;
+            max-height: 85px;
+            display: block;
+            margin: 4px auto 0 auto;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
+        /* Financial Total Rows */
+        .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .totals-table td {
+            padding: 4px 6px;
+            font-size: 9pt;
+            border: 1px solid #000000;
+        }
+        .total-label {
+            font-weight: 800;
+            text-align: right;
+            padding-right: 12px;
+        }
+        .total-value {
+            font-weight: 800;
+            text-align: right;
+            width: 18%;
+        }
+
+        /* Notes & Closing */
+        .notes-section {
+            font-size: 8.5pt;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        .notes-list {
+            margin: 2px 0 8px 0;
+            padding-left: 18px;
+        }
+        .closing-contact {
+            font-size: 9pt;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        /* Signatures */
+        .signature-container {
+            margin-top: 12px;
+            width: 250px;
+            page-break-inside: avoid;
+        }
+        .stamp-box {
+            position: relative;
+            height: 75px;
+            margin: 4px 0;
+        }
+        .signature-overlay {
+            position: absolute;
+            left: 10px;
+            top: 2px;
+            height: 70px;
+        }
+        .signer-name {
+            font-weight: 800;
+            font-size: 9.5pt;
+            text-decoration: underline;
+        }
+        .signer-title {
+            font-size: 9pt;
+            margin-top: 1px;
+        }
+
+        /* Running footer for direct browser print preview */
+        .running-footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 7.5pt;
+            color: #0284c7;
+            font-weight: 600;
+            line-height: 1.35;
+            border-top: 1px solid #e0f2fe;
+            padding-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <table class="header-table">
+        <tr>
+            <td class="logo-box" style="width: 60%;">
+                <table style="border: none; border-collapse: collapse;">
+                    <tr>
+                        <td style="border: none; padding: 0; vertical-align: middle; width: 55px;">
+                            <img src="{{ logo_base64|default:'/static/img/maroa_logo.png' }}" style="height: 38px; width: auto; display: block;" alt="MAROA Logo">
+                        </td>
+                        <td style="border: none; padding-left: 8px; vertical-align: middle;">
+                            <div class="logo-title">MAROA</div>
+                            <div class="logo-tagline">GENERAL SUPPLIER AND CONTRACTORS</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 40%; vertical-align: middle;">
+                <div class="doc-title-text">SALES LETTER</div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Blue Bar -->
+    <div class="blue-bar"></div>
+
+    <!-- Recipient & Meta Information Box -->
+    <table class="meta-container">
+        <tr>
+            <td class="meta-left">
+                <div style="color: #000000; font-size: 9.5pt;">Kepada :</div>
+                <div style="font-weight: bold; font-size: 10pt; margin-top: 4px; text-transform: uppercase;">
+                    {{ quotation.customer_name_text|default:quotation.customer.company_name|default:"PT SINAR TERANG MANDIRI" }}
+                </div>
+            </td>
+            <td class="meta-right">
+                <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt;">
+                    <tr>
+                        <td style="padding: 1px 0; width: 34%; font-weight: normal;">No Quotation</td>
+                        <td style="padding: 1px 0; width: 66%; font-weight: bold;">: {{ quotation.quotation_number }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1px 0; font-weight: normal;">Tanggal</td>
+                        <td style="padding: 1px 0;">: {{ quotation.date|date:"d F Y" }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1px 0; font-weight: normal;">Location</td>
+                        <td style="padding: 1px 0;">: {{ quotation.location|default:"Makassar" }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Intro Text -->
+    <div class="intro-text">
+        Sesuai dengan penawaran barang yang telah Kami terima, maka dengan ini Kami ajukan penawaran harga sebagai berikut:
+    </div>
+
+    <!-- Keterangan -->
+    <div class="keterangan-text">
+        Keterangan : {{ quotation.keterangan|default:quotation.project_reference|default:"WBN" }}
+    </div>
+
+    <!-- Items Table -->
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th style="width: 5%;">NO</th>
+                <th style="width: 18%;">MPN</th>
+                <th style="width: 37%;">DESKRIPSI</th>
+                <th style="width: 7%;">QTY</th>
+                <th style="width: 7%;">UOM</th>
+                <th style="width: 13%;">PRICE/PCS</th>
+                <th style="width: 13%;">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in quotation.items.all %}
+            <tr>
+                <td class="text-center">{{ forloop.counter }}</td>
+                <td class="text-center" style="font-weight: bold; font-family: monospace; font-size: 8.5pt;">
+                    {{ item.part_number|default:"-" }}
+                </td>
+                <td class="text-left">
+                    <div style="font-weight: bold; text-transform: uppercase;">{{ item.description }}</div>
+                    {% if item.specification %}
+                    <div style="font-size: 8pt; color: #333333; margin-top: 1px;">{{ item.specification }}</div>
+                    {% endif %}
+                    {% if item.image %}
+                    <img src="{{ item.image }}" class="item-img" alt="Product Image">
+                    {% endif %}
+                </td>
+                <td class="text-center" style="font-weight: bold;">{{ item.quantity|floatformat:"-2" }}</td>
+                <td class="text-center" style="font-weight: bold;">{{ item.uom|default:"PC" }}</td>
+                <td class="text-right">Rp{{ item.unit_price|floatformat:"0" }}</td>
+                <td class="text-right" style="font-weight: bold;">Rp{{ item.row_total|floatformat:"0" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center" style="padding: 12px;">Tidak ada item penawaran.</td>
+            </tr>
+            {% endfor %}
+
+            <!-- Totals Rows -->
+            <tr>
+                <td colspan="5" style="border: none;"></td>
+                <td class="total-label">TOTAL</td>
+                <td class="total-value">{{ formatted_subtotal }}</td>
+            </tr>
+            {% if quotation.tax_rate > 0 %}
+            <tr>
+                <td colspan="5" style="border: none;"></td>
+                <td class="total-label">PPN 11%</td>
+                <td class="total-value">{{ formatted_tax_amount }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td colspan="5" style="border: none;"></td>
+                <td class="total-label">SUB TOTAL</td>
+                <td class="total-value">{{ formatted_grand_total }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Catatan (Notes) -->
+    <div class="notes-section">
+        <div style="font-weight: bold;">Catatan:</div>
+        <div style="white-space: pre-line; margin-top: 2px;">
+            {{ quotation.customer_notes|default:"1. Harga sudah termasuk pengiriman Franco Site\n2. Mohon diinfokan sebelum melakukan pemesanan karena stok produk terbatas\n3. Surat penawaran ini bukan merupakan bukti ikatan transaksi\n4. TOP 30 Hari" }}
+        </div>
+    </div>
+
+    <!-- Closing Contact -->
+    <div class="closing-contact">
+        Demikian penawaran harga yang Kami ajukan, jika ada pertanyaan dapat menghubungi:<br>
+        <strong>{{ quotation.contact_person_name|default:"Muh. Safar Alparel (0852 5600 6119)" }}</strong>. Terima kasih.
+    </div>
+
+    <!-- Signature Section -->
+    <div class="signature-container">
+        <div>Hormat Kami,</div>
+        <div class="stamp-box">
+            <!-- Stamp & Signature Graphic -->
+            <svg class="signature-overlay" viewBox="0 0 220 90" width="170" height="70" xmlns="http://www.w3.org/2000/svg">
+                <!-- Signature Strokes -->
+                <path d="M15 65 C30 20, 45 10, 55 45 C65 75, 75 15, 85 40 C95 60, 115 35, 140 45 C160 55, 185 30, 200 60" stroke="#0f2b5c" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <path d="M40 50 Q70 80 120 40 Q160 10 180 50" stroke="#0f2b5c" stroke-width="1.8" fill="none"/>
+                
+                <!-- Blue Company Circular Stamp Overlay -->
+                <circle cx="105" cy="45" r="38" stroke="#1d4ed8" stroke-width="2.5" fill="none" stroke-opacity="0.8" stroke-dasharray="1 0"/>
+                <circle cx="105" cy="45" r="34" stroke="#1d4ed8" stroke-width="1.2" fill="none" stroke-opacity="0.8"/>
+                <text x="105" y="24" text-anchor="middle" fill="#1d4ed8" font-size="6.5" font-family="Arial" font-weight="bold" fill-opacity="0.85">PT. MAROA TUNGGA ABADI</text>
+                <text x="105" y="48" text-anchor="middle" fill="#1d4ed8" font-size="8.5" font-family="Arial" font-weight="900" fill-opacity="0.85">★ MAROA ★</text>
+                <text x="105" y="68" text-anchor="middle" fill="#1d4ed8" font-size="6.5" font-family="Arial" font-weight="bold" fill-opacity="0.85">MAKASSAR</text>
+            </svg>
+        </div>
+        <div class="signer-name">{{ quotation.signer_name|default:"Muh. Safar Alparel" }}</div>
+        <div class="signer-title">{{ quotation.signer_title|default:"Direktur" }}</div>
+    </div>
+
+    <!-- Running Footer on Web Preview -->
+    <div class="running-footer">
+        PT. MAROA TUNGGA ABADI | Jl. Sultan Dg. Raja No. 59, Ruko No. 63, Timungan Lompoa, Bontoala, Kota Makassar, Sulawesi Selatan – 90152<br>
+        Email: shafaralfarel@gmail.com | Phone: 0852 5600 6119 | Instagram: @maroatunggaabadi
+    </div>
+
+</body>
+</html>

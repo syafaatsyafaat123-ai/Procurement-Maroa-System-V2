@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>BAST - {{ bast.bast_number }}</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1.2cm 1.5cm 1.6cm 1.5cm;
+            @bottom-center {
+                content: "PT. MAROA TUNGGA ABADI | Jl. Sultan Dg. Raja No. 59, Ruko No. 63, Timungan Lompoa, Bontoala, Kota Makassar, Sulawesi Selatan – 90152\A Email: shafaralfarel@gmail.com | Phone: 0852 5600 6119 | Instagram: @maroatunggaabadi";
+                font-size: 7.2pt;
+                color: #0284c7;
+                font-family: Arial, Helvetica, sans-serif;
+                white-space: pre-wrap;
+                font-weight: 600;
+                line-height: 1.3;
+            }
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9.5pt;
+            color: #000000;
+            line-height: 1.35;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        .header-table {
+            width: 100%;
+        }
+        .logo-title {
+            font-size: 24pt;
+            font-weight: 900;
+            color: #004b93;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+        .logo-tagline {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: #0056b3;
+            letter-spacing: 0.8px;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+        .doc-title-text {
+            font-size: 20pt;
+            font-weight: 900;
+            color: #0052cc;
+            text-align: right;
+            text-transform: uppercase;
+        }
+        .blue-bar {
+            height: 4px;
+            background-color: #0052cc;
+            width: 100%;
+            margin-top: 6px;
+            margin-bottom: 20px;
+        }
+
+        .main-heading {
+            text-align: center;
+            font-size: 13pt;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .client-header {
+            text-align: center;
+            font-size: 10.5pt;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .po-header {
+            text-align: center;
+            font-size: 10.5pt;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 22px;
+        }
+
+        /* Items Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+        }
+        .items-table th {
+            background-color: #0052cc;
+            color: #ffffff;
+            font-size: 9pt;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 6px 4px;
+            border: 1px solid #000000;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .items-table td {
+            border: 1px solid #000000;
+            padding: 7px 6px;
+            font-size: 9pt;
+            vertical-align: middle;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+
+        /* Signatures Container */
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #000000;
+        }
+        .signature-table td {
+            width: 50%;
+            border: 1px solid #000000;
+            vertical-align: top;
+            padding: 12px 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9pt;
+        }
+        .stamp-box {
+            position: relative;
+            height: 80px;
+            margin: 6px 0;
+        }
+        .signature-overlay {
+            position: absolute;
+            left: 20px;
+            top: 2px;
+            height: 75px;
+        }
+        .date-box {
+            border-top: 1px solid #000000;
+            padding-top: 6px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .running-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 7.5pt;
+            color: #0284c7;
+            font-weight: 600;
+            line-height: 1.35;
+            border-top: 1px solid #e0f2fe;
+            padding-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <table class="header-table">
+        <tr>
+            <td style="width: 60%; vertical-align: middle;">
+                <div style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+                    <svg width="46" height="32" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 70 L35 15 L55 50 L75 15 L100 70" stroke="#004b93" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M30 70 L48 36 L66 70" stroke="#0080ff" stroke-width="8" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div style="display: inline-block; vertical-align: middle;">
+                    <span class="logo-title">MAROA</span>
+                    <div class="logo-tagline">GENERAL SUPPLIER AND CONTRACTORS</div>
+                </div>
+            </td>
+            <td style="width: 40%; vertical-align: middle;">
+                <div class="doc-title-text">BAST</div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="blue-bar"></div>
+
+    <!-- Title & PO Header -->
+    <div class="main-heading">BERITA ACARA SERAH TERIMA</div>
+    <div class="client-header">{{ bast.customer.company_name|default:"PT SINAR TERANG MANDIRI" }}</div>
+    <div class="po-header">No. PO: {{ bast.purchase_order.po_number|default:bast.delivery_order_number|default:"2050020524" }}</div>
+
+    <!-- Items Table -->
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th style="width: 8%;">NO</th>
+                <th style="width: 25%;">PARTNO</th>
+                <th style="width: 47%;">DESCRIPTION</th>
+                <th style="width: 10%;">QTY</th>
+                <th style="width: 10%;">UOM</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in bast.items.all %}
+            <tr>
+                <td class="text-center">{{ forloop.counter }}</td>
+                <td class="text-center">{{ item.part_number|default:"-" }}</td>
+                <td class="text-left">{{ item.description }}</td>
+                <td class="text-center">{{ item.received_quantity|floatformat:"-2" }}</td>
+                <td class="text-center">{{ item.uom|default:"PC" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center" style="padding: 12px;">Tidak ada item serah terima.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Signature Block -->
+    <table class="signature-table">
+        <tr>
+            <td>
+                <div style="text-align: center; font-weight: bold; margin-bottom: 2px;">HORMAT KAMI</div>
+                <div style="text-align: center; font-weight: bold;">PT. MAROA TUNGGA ABADI</div>
+                <div class="stamp-box">
+                    <svg class="signature-overlay" viewBox="0 0 220 90" width="170" height="75" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 65 C30 20, 45 10, 55 45 C65 75, 75 15, 85 40 C95 60, 115 35, 140 45 C160 55, 185 30, 200 60" stroke="#0f2b5c" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                        <path d="M40 50 Q70 80 120 40 Q160 10 180 50" stroke="#0f2b5c" stroke-width="1.8" fill="none"/>
+                        
+                        <circle cx="105" cy="45" r="38" stroke="#1d4ed8" stroke-width="2.5" fill="none" stroke-opacity="0.8"/>
+                        <circle cx="105" cy="45" r="34" stroke="#1d4ed8" stroke-width="1.2" fill="none" stroke-opacity="0.8"/>
+                        <text x="105" y="24" text-anchor="middle" fill="#1d4ed8" font-size="6.5" font-family="Arial" font-weight="bold" fill-opacity="0.85">PT. MAROA TUNGGA ABADI</text>
+                        <text x="105" y="48" text-anchor="middle" fill="#1d4ed8" font-size="8.5" font-family="Arial" font-weight="900" fill-opacity="0.85">★ MAROA ★</text>
+                        <text x="105" y="68" text-anchor="middle" fill="#1d4ed8" font-size="6.5" font-family="Arial" font-weight="bold" fill-opacity="0.85">MAKASSAR</text>
+                    </svg>
+                </div>
+                <div style="text-align: center; font-weight: bold; margin-top: 15px;">MUH. SAFAR ALPAREL</div>
+                <div class="date-box">DATE : {{ bast.bast_date|date:"d F Y"|upper }}</div>
+            </td>
+            <td>
+                <div style="text-align: center; font-weight: bold; margin-bottom: 2px;">PENERIMA</div>
+                <div style="text-align: center; font-weight: bold;">{{ bast.customer.company_name|default:"PT SINAR TERANG MANDIRI" }}</div>
+                <div class="stamp-box"></div>
+                <div style="text-align: center; font-weight: bold; margin-top: 15px;">{{ bast.received_by|default:"( ____________________ )" }}</div>
+                <div class="date-box">DATE: </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Running Footer on Web Preview -->
+    <div class="running-footer">
+        PT. MAROA TUNGGA ABADI | Jl. Sultan Dg. Raja No. 59, Ruko No. 63, Timungan Lompoa, Bontoala, Kota Makassar, Sulawesi Selatan – 90152<br>
+        Email: shafaralfarel@gmail.com | Phone: 0852 5600 6119 | Instagram: @maroatunggaabadi
+    </div>
+
+</body>
+</html>

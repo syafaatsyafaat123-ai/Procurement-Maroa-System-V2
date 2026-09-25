@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Order {{ po.po_number }} - PT. MAROA TUNGGA ABADI</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1.5cm 1.5cm 2cm 1.5cm;
+            @bottom-right {
+                content: "Hal " counter(page) " dari " counter(pages);
+                font-size: 8pt;
+                color: #64748b;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+        }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+        .header-table {
+            width: 100%;
+            border-bottom: 2.5px solid #0d9488;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .company-name {
+            font-size: 16pt;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin: 0;
+        }
+        .company-tagline {
+            font-size: 9pt;
+            font-weight: 700;
+            color: #0d9488;
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+        .doc-title {
+            text-align: right;
+        }
+        .doc-title h1 {
+            font-size: 18pt;
+            color: #0f172a;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .doc-number {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #0d9488;
+            margin-top: 4px;
+        }
+        .meta-grid {
+            width: 100%;
+            margin-bottom: 18px;
+        }
+        .meta-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px;
+            vertical-align: top;
+        }
+        .meta-label {
+            font-size: 7.5pt;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        .meta-value {
+            font-size: 9pt;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+        }
+        .items-table th {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-size: 8pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 8px 6px;
+            border: 1px solid #0f172a;
+            text-align: left;
+        }
+        .items-table td {
+            border: 1px solid #cbd5e1;
+            padding: 7px 6px;
+            font-size: 8.5pt;
+        }
+        .items-table tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-mono { font-family: monospace; }
+        .totals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .totals-table td {
+            padding: 4px 8px;
+            font-size: 8.5pt;
+        }
+        .totals-table tr.grand-total td {
+            font-size: 10pt;
+            font-weight: 800;
+            color: #0d9488;
+            border-top: 2px solid #0d9488;
+            border-bottom: 2px solid #0d9488;
+            background-color: #f0fdfa;
+            padding: 6px 8px;
+        }
+        .signature-table {
+            width: 100%;
+            margin-top: 35px;
+            page-break-inside: avoid;
+        }
+        .signature-box {
+            width: 45%;
+            text-align: center;
+            vertical-align: top;
+        }
+        .signature-space { height: 60px; }
+        .signature-name {
+            font-weight: 700;
+            text-decoration: underline;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+    <table class="header-table">
+        <tr>
+            <td style="width: 55%; vertical-align: top;">
+                <div class="company-name">PT. MAROA TUNGGA ABADI</div>
+                <div class="company-tagline">General Supplier & Contractor</div>
+                <div style="font-size: 8pt; color: #475569; margin-top: 4px;">
+                    Jl. Pengayoman, Komp. Pasar Segar Ruko Blok RA No. 15, Makassar<br>
+                    Email: procurement@maroa-tungga.co.id | Telp: (0411) 894-7123
+                </div>
+            </td>
+            <td class="doc-title" style="width: 45%; vertical-align: top;">
+                <h1>PURCHASE ORDER</h1>
+                <div class="doc-number">{{ po.po_number }}</div>
+                <div style="font-size: 8.5pt; color: #64748b; margin-top: 3px;">
+                    Tanggal: <strong>{{ po.po_date|date:"d F Y" }}</strong>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="meta-grid">
+        <tr>
+            <td class="meta-box" style="width: 48%;">
+                <div class="meta-label">Kepada Vendor / Supplier:</div>
+                <div class="meta-value" style="font-size: 10pt; color: #0d9488;">{{ po.supplier.company_name }}</div>
+                <div style="font-size: 8.5pt; margin-top: 3px;">
+                    Attn: <strong>{{ po.supplier.contact_person|default:"Sales / Order Processing" }}</strong><br>
+                    {{ po.supplier.address|default:"Makassar" }}<br>
+                    Telp: {{ po.supplier.phone|default:"-" }} | Email: {{ po.supplier.email|default:"-" }}
+                </div>
+            </td>
+            <td style="width: 4%;"></td>
+            <td class="meta-box" style="width: 48%;">
+                <div class="meta-label">Detail Order & Pengiriman:</div>
+                <table style="width: 100%; font-size: 8.5pt;">
+                    {% if po.quotation %}
+                    <tr>
+                        <td style="color: #64748b; width: 40%;">Ref Quotation:</td>
+                        <td style="font-weight: 600;">{{ po.quotation.quotation_number }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td style="color: #64748b;">Target Kirim:</td>
+                        <td style="font-weight: 600;">{{ po.expected_delivery_date|date:"d F Y"|default:"Sesuai Kesepakatan" }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b;">Syarat Bayar:</td>
+                        <td style="font-weight: 600;">{{ po.payment_terms }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b;">Alamat Kirim:</td>
+                        <td style="font-weight: 600;">{{ po.delivery_address }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th class="text-center" style="width: 5%;">No</th>
+                <th style="width: 20%;">Part Number</th>
+                <th style="width: 35%;">Deskripsi Barang / Jasa</th>
+                <th class="text-center" style="width: 8%;">Qty</th>
+                <th class="text-center" style="width: 7%;">Sat</th>
+                <th class="text-right" style="width: 12%;">Harga Satuan</th>
+                <th class="text-right" style="width: 13%;">Total (IDR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in po.items.all %}
+            <tr>
+                <td class="text-center">{{ forloop.counter }}</td>
+                <td class="font-mono" style="font-weight: 700; color: #0d9488;">{{ item.part_number|default:"-" }}</td>
+                <td>{{ item.description }}</td>
+                <td class="text-center" style="font-weight: 600;">{{ item.quantity }}</td>
+                <td class="text-center">{{ item.uom }}</td>
+                <td class="text-right">{{ item.unit_price }}</td>
+                <td class="text-right" style="font-weight: 600;">{{ item.row_total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center" style="padding: 15px; color: #94a3b8;">Tidak ada item.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table style="width: 100%; margin-top: 10px;">
+        <tr>
+            <td style="width: 55%; vertical-align: top; background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 6px; font-size: 8pt;">
+                <strong>Instruksi & Catatan Khusus:</strong><br>
+                1. Mohon sertakan Salinan PO ini pada saat pengiriman barang.<br>
+                2. Semua barang harus dalam kondisi baru dan sesuai dengan spesifikasi yang tertera.<br>
+                3. Berita Acara Serah Terima (BAST) wajib ditandatangani saat serah terima fisik.<br>
+                Catatan: {{ po.notes|default:"-" }}
+            </td>
+            <td style="width: 5%;"></td>
+            <td style="width: 40%; vertical-align: top;">
+                <table class="totals-table">
+                    <tr>
+                        <td style="color: #64748b;">Subtotal:</td>
+                        <td class="text-right" style="font-weight: 600;">{{ formatted_subtotal }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b;">PPN ({{ tax_percent_label }}):</td>
+                        <td class="text-right" style="font-weight: 600;">{{ formatted_tax_amount }}</td>
+                    </tr>
+                    <tr class="grand-total">
+                        <td>TOTAL PO:</td>
+                        <td class="text-right">{{ formatted_grand_total }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table class="signature-table">
+        <tr>
+            <td class="signature-box">
+                <div style="font-size: 8pt; color: #64748b;">Konfirmasi & Disetujui Vendor:</div>
+                <div style="font-size: 8.5pt; font-weight: 700;">{{ po.supplier.company_name }}</div>
+                <div class="signature-space"></div>
+                <div class="signature-name">( _________________________ )</div>
+                <div style="font-size: 8pt; color: #64748b;">Nama & Cap Perusahaan</div>
+            </td>
+            <td style="width: 10%;"></td>
+            <td class="signature-box">
+                <div style="font-size: 8pt; color: #64748b;">Diterbitkan Oleh:</div>
+                <div style="font-size: 8.5pt; font-weight: 700;">PT. MAROA TUNGGA ABADI</div>
+                <div class="signature-space"></div>
+                <div class="signature-name">{{ po.created_by.get_full_name|default:"Safar / Procurement" }}</div>
+                <div style="font-size: 8pt; color: #64748b;">Procurement Department</div>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
